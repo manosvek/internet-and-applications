@@ -1,6 +1,8 @@
 # internet-and-applications
 Web project for Internet &amp; Applications Appathon
 
+Παρουσιάζονται δύο εναλλακτικές, με σειρά προτίμησης τη σειρά εμφάνισης τους. Σε περίπτωση που η πρώτη δεν επαρκεί, υπάρχει η δεύτερη η οποία βασίζεται στο CTGOV-03.
+
 # Εναλλακτική 1
 
 ### Περιγραφή του Project
