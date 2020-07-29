@@ -1,13 +1,19 @@
 import React from "react";
+import { Map, TileLayer, Marker, Popup, GeoJSON } from "react-leaflet";
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+import hash from 'object-hash';
 
 import Titles from "./components/Titles"
 import Form from "./components/Form"
 import Weather from "./components/Weather"
 import Tabs from './components/Tabs';
 
-const API_KEY = "9c8c814f6f94f1bb0ad930ceada1d790";
 
-var data3;
+const API_KEY1 = "9c8c814f6f94f1bb0ad930ceada1d790";
+const API_KEY2 = "5b3ce3597851110001cf62485fb1355fbbe9493d9ef5a0b59535dcfd"
+
+var data3, route;
 var days = [1,2,3,4,5,6,7];
 
 class App extends React.Component {
@@ -27,7 +33,6 @@ class App extends React.Component {
     decription2: undefined,
     lat2: undefined,
     lon2: undefined,
-    forecast: [],
     error2: undefined
   }
 
@@ -39,16 +44,22 @@ class App extends React.Component {
     var city2 = e.target.elements.city2.value;
     var country2 = e.target.elements.country2.value;
 
-    var api_call = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city1},${country1}&appid=${API_KEY}&units=metric`);
+    var api_call = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city1},${country1}&appid=${API_KEY1}&units=metric`);
     var data1 = await api_call.json();
 
-    api_call = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city2},${country2}&appid=${API_KEY}&units=metric`);
+    api_call = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city2},${country2}&appid=${API_KEY1}&units=metric`);
     var data2 = await api_call.json();
 
     if (data2.coord) {
       api_call = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${data2.coord.lat}&lon=${data2.coord.lon}&
-exclude=current,minutely,hourly&appid=${API_KEY}&units=metric`);
+exclude=current,minutely,hourly&appid=${API_KEY1}&units=metric`);
       data3 = await api_call.json();
+    }
+
+    if (data1.coord && data2.coord) {
+      api_call = await fetch(`https://api.openrouteservice.org/v2/directions/driving-car?api_key=${API_KEY2}&start=${data1.coord.lon},${data1.coord.lat}&end=${data2.coord.lon},${data2.coord.lat}`);
+      route = await api_call.json();
+      console.log(route);
     }
 
     if (city1 && country1 && data1.cod === 200) {
@@ -76,8 +87,6 @@ exclude=current,minutely,hourly&appid=${API_KEY}&units=metric`);
     }
 
     if (city2 && country2 && data2.cod === 200) {
-      // console.log(data2);
-
       this.setState({
         temperature2: data2.main.temp,
         city2: data2.name,
@@ -86,10 +95,8 @@ exclude=current,minutely,hourly&appid=${API_KEY}&units=metric`);
         description2: data2.weather[0].description,
         lat2: data2.coord.lat,
         lon2: data2.coord.lon,
-        forecast: data3.daily,
         error2: ""
       });
-      console.log(this.state.forecast);
     } else {
       this.setState({
         temperature2: undefined,
@@ -107,8 +114,29 @@ exclude=current,minutely,hourly&appid=${API_KEY}&units=metric`);
   }
 
 
-
   render() {
+
+    const convertHMS = function(value)  {
+      const sec = parseInt(value, 10); // convert value to number if it's string
+      let hours   = Math.floor(sec / 3600); // get hours
+      let minutes = Math.floor((sec - (hours * 3600)) / 60); // get minutes
+      if (hours   < 10) {hours   = "0"+hours;}
+      if (minutes < 10) {minutes = "0"+minutes;}
+      return hours+':'+minutes;//+':'+seconds; // Return is HH : MM : SS
+    }
+
+    delete L.Icon.Default.prototype._getIconUrl;
+
+    L.Icon.Default.mergeOptions({
+        iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+        iconUrl: require('leaflet/dist/images/marker-icon.png'),
+        shadowUrl: require('leaflet/dist/images/marker-shadow.png')
+    });
+
+
+    const position1 = [this.state.lat1, this.state.lon1];
+    const position2 = [this.state.lat2, this.state.lon2];
+
     return (
       <div>
         <div className="wrapper">
@@ -120,7 +148,7 @@ exclude=current,minutely,hourly&appid=${API_KEY}&units=metric`);
                 </div>
                 <div className="col-xs-7 form-container">
                   <Form getWeather={this.getWeather} />
-                  {this.state.city1 && <Tabs>
+                  {(this.state.city1 || this.state.city2) && <Tabs>
                     <div label={this.state.city1}>
                       <Weather
                         temperature={this.state.temperature1}
@@ -133,8 +161,7 @@ exclude=current,minutely,hourly&appid=${API_KEY}&units=metric`);
                     </div>
                     <div label={this.state.city2}>
                       <Weather
-                        // temperature={this.state.temperature2}
-                        temperature={data3.daily[2].temp.day}
+                        temperature={this.state.temperature2}
                         humidity={this.state.humidity2}
                         city={this.state.city2}
                         country={this.state.country2}
@@ -142,22 +169,56 @@ exclude=current,minutely,hourly&appid=${API_KEY}&units=metric`);
                         error={this.state.error2}
                       />
                     </div>
-                    <div label={"Forecast"}>
+                    <div label="Forecast">
                       <Tabs>
                         {days.map(day => (
                           <div label={`Day ${day}`}>
-                            <Weather
+                            {(data3 && <Weather
                               temperature={data3.daily[day].temp.day}
                               humidity={data3.daily[day].humidity}
                               city={this.state.city2}
                               country={this.state.country2}
                               description={data3.daily[day].weather[0].description}
                               error={this.state.error2}
+                            />)
+                            || <Weather
+                              temperature={undefined}
+                              humidity={undefined}
+                              city={this.state.city2}
+                              country={this.state.country2}
+                              description={undefined}
+                              error={this.state.error2}
                             />
+                            }
                           </div>
                         ))}
                       </Tabs>
-
+                    </div>
+                    <div label = "Route">
+                      {this.state.city1 && this.state.city2 && route && <div id="mapid">
+                        <Map center={position1} zoom="8">
+                          <TileLayer
+                            attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                          />
+                          <Marker position={position1}>
+                            <Popup>
+                              {this.state.city1}, {this.state.country1}
+                            </Popup>
+                          </Marker>
+                          <Marker position={position2}>
+                            <Popup>
+                              {this.state.city2}, {this.state.country2}
+                            </Popup>
+                          </Marker>
+                          <GeoJSON key={hash(route)} data={route}>
+                            <Popup>
+                              Distance: {(route.features[0].properties.summary.distance / 1000).toFixed(3)} (km). <br /> Duration: {convertHMS(route.features[0].properties.summary.duration)} (hh:mm).
+                            </Popup>
+                          </GeoJSON>
+                        </Map>
+                      </div>
+                      }
                     </div>
                   </Tabs>
                   }
@@ -170,5 +231,4 @@ exclude=current,minutely,hourly&appid=${API_KEY}&units=metric`);
     );
   }
 }
-
 export default App;

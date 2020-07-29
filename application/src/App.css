@@ -146,3 +146,11 @@ button:active {
   border: 0;
   border-width: 1px 1px 0 1px;
 }
+
+#mapid { height: 180px; }
+
+.leaflet-container {
+    height: 400px;
+    width: 80%;
+    margin: 0 auto;
+  }

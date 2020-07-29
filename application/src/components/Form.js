@@ -6,7 +6,7 @@ const Form = props => (
         <input type="text" name="country1" placeholder="First Country..."/>
         <input type="text" name="city2" placeholder="Second City..."/>
         <input type="text" name="country2" placeholder="Second Country..."/>
-        <button>Get Weather</button>
+        <button>Get Weather & Route</button>
       </form>
     );
 
