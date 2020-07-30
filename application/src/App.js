@@ -1,13 +1,14 @@
 import React from "react";
-import { Map, TileLayer, Marker, Popup, GeoJSON } from "react-leaflet";
-import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
-import hash from 'object-hash';
+// import { Map, TileLayer, Marker, Popup, GeoJSON } from "react-leaflet";
+// import 'leaflet/dist/leaflet.css';
+// import L from 'leaflet';
+// import hash from 'object-hash';
 
 import Titles from "./components/Titles"
 import Form from "./components/Form"
 import Weather from "./components/Weather"
-import Tabs from './components/Tabs';
+import Tabs from "./components/Tabs"
+import Route from "./components/Route"
 
 
 const API_KEY1 = "9c8c814f6f94f1bb0ad930ceada1d790";
@@ -115,25 +116,6 @@ exclude=current,minutely,hourly&appid=${API_KEY1}&units=metric`);
 
 
   render() {
-
-    const convertHMS = function(value)  {
-      const sec = parseInt(value, 10); // convert value to number if it's string
-      let hours   = Math.floor(sec / 3600); // get hours
-      let minutes = Math.floor((sec - (hours * 3600)) / 60); // get minutes
-      if (hours   < 10) {hours   = "0"+hours;}
-      if (minutes < 10) {minutes = "0"+minutes;}
-      return hours+':'+minutes;//+':'+seconds; // Return is HH : MM : SS
-    }
-
-    delete L.Icon.Default.prototype._getIconUrl;
-
-    L.Icon.Default.mergeOptions({
-        iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-        iconUrl: require('leaflet/dist/images/marker-icon.png'),
-        shadowUrl: require('leaflet/dist/images/marker-shadow.png')
-    });
-
-
     const position1 = [this.state.lat1, this.state.lon1];
     const position2 = [this.state.lat2, this.state.lon2];
 
@@ -195,30 +177,13 @@ exclude=current,minutely,hourly&appid=${API_KEY1}&units=metric`);
                       </Tabs>
                     </div>
                     <div label = "Route">
-                      {this.state.city1 && this.state.city2 && route && <div id="mapid">
-                        <Map center={position1} zoom="8">
-                          <TileLayer
-                            attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                          />
-                          <Marker position={position1}>
-                            <Popup>
-                              {this.state.city1}, {this.state.country1}
-                            </Popup>
-                          </Marker>
-                          <Marker position={position2}>
-                            <Popup>
-                              {this.state.city2}, {this.state.country2}
-                            </Popup>
-                          </Marker>
-                          <GeoJSON key={hash(route)} data={route}>
-                            <Popup>
-                              Distance: {(route.features[0].properties.summary.distance / 1000).toFixed(3)} (km). <br /> Duration: {convertHMS(route.features[0].properties.summary.duration)} (hh:mm).
-                            </Popup>
-                          </GeoJSON>
-                        </Map>
-                      </div>
-                      }
+                      <Route
+                        city1 = {this.state.city1}
+                        city2 = {this.state.city2}
+                        route = {route}
+                        position1 = {position1}
+                        position2 = {position2}
+                      />
                     </div>
                   </Tabs>
                   }
