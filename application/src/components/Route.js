@@ -26,35 +26,43 @@ L.Icon.Default.mergeOptions({
 
 const Route = props => (
   <div>
-    {props.position1 && props.position2 && props.route.features && <div id="mapid">
-      <Map center={props.position1} zoom="8">
-        <TileLayer
-          attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <Marker position={props.position1}>
-          <Popup>
-            {props.city1}, {props.country1}
-          </Popup>
-        </Marker>
-        <Marker position={props.position2}>
-          <Popup>
-            {props.city2}, {props.country2}
-          </Popup>
-        </Marker>
-        <GeoJSON key={hash(props.route)} data={props.route}>
-          <Popup>
-            Distance: {(props.route.features[0].properties.summary.distance / 1000).toFixed(3)} (km). <br /> Duration: {convertHMS(props.route.features[0].properties.summary.duration)} (hh:mm).
-          </Popup>
-        </GeoJSON>
-      </Map>
+    {props.route && <div>
+      {props.position1 && props.position2 && props.route.features && <div id="mapid">
+        <Map center={props.position1} zoom="8">
+          <TileLayer
+            attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <Marker position={props.position1}>
+            <Popup>
+              {props.city1}, {props.country1}
+            </Popup>
+          </Marker>
+          <Marker position={props.position2}>
+            <Popup>
+              {props.city2}, {props.country2}
+            </Popup>
+          </Marker>
+          <GeoJSON key={hash(props.route)} data={props.route}>
+            <Popup>
+              Distance: {(props.route.features[0].properties.summary.distance / 1000).toFixed(3)} (km). <br /> Duration: {convertHMS(props.route.features[0].properties.summary.duration)} (hh:mm).
+            </Popup>
+          </GeoJSON>
+        </Map>
+      </div>
+      }
+      {props.position1 && props.position2 && !props.route.features && <p className="weather__error">
+        There is no route between the two cities.
+        </p>
+      }
     </div>
     }
-    {props.position1 && props.position2 && !props.route.features && <p className="weather__error">
-      There is no route between the two cities
+    {!props.route && <p className="weather__error">
+      Please enter valid cities and countries.
       </p>
     }
   </div>
+
 );
 
 export default Route;

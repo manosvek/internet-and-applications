@@ -1,8 +1,4 @@
 import React from "react";
-// import { Map, TileLayer, Marker, Popup, GeoJSON } from "react-leaflet";
-// import 'leaflet/dist/leaflet.css';
-// import L from 'leaflet';
-// import hash from 'object-hash';
 
 import Titles from "./components/Titles"
 import Form from "./components/Form"
@@ -112,6 +108,7 @@ exclude=current,minutely,hourly&appid=${API_KEY1}&units=metric`);
       });
     }
     console.log(this.state);
+    console.log(route);
   }
 
 
@@ -130,7 +127,7 @@ exclude=current,minutely,hourly&appid=${API_KEY1}&units=metric`);
                 </div>
                 <div className="col-xs-7 form-container">
                   <Form getWeather={this.getWeather} />
-                  {(this.state.city1 || this.state.city2) && <Tabs>
+                  {(this.state.temperature1 || this.state.temperature2) && <Tabs>
                     <div label={this.state.city1}>
                       <Weather
                         temperature={this.state.temperature1}
