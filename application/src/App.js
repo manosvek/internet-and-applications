@@ -6,6 +6,8 @@ import Weather from "./components/Weather"
 import Tabs from "./components/Tabs"
 import Route from "./components/Route"
 
+import moment from 'moment';
+
 
 const API_KEY1 = "9c8c814f6f94f1bb0ad930ceada1d790";
 const API_KEY2 = "5b3ce3597851110001cf62485fb1355fbbe9493d9ef5a0b59535dcfd"
@@ -30,7 +32,7 @@ class App extends React.Component {
     decription2: undefined,
     lat2: undefined,
     lon2: undefined,
-    error2: undefined
+    error2: undefined,
   }
 
 
@@ -109,6 +111,7 @@ exclude=current,minutely,hourly&appid=${API_KEY1}&units=metric`);
     }
     console.log(this.state);
     console.log(route);
+    console.log(data3);
   }
 
 
@@ -151,7 +154,7 @@ exclude=current,minutely,hourly&appid=${API_KEY1}&units=metric`);
                     <div label="Forecast">
                       <Tabs>
                         {days.map(day => (
-                          <div label={`Day ${day}`}>
+                          <div label={moment().add('days', day).format("DD/MM")}>
                             {(data3 && <Weather
                               temperature={data3.daily[day].temp.day}
                               humidity={data3.daily[day].humidity}
@@ -177,6 +180,8 @@ exclude=current,minutely,hourly&appid=${API_KEY1}&units=metric`);
                       <Route
                         city1 = {this.state.city1}
                         city2 = {this.state.city2}
+                        country1 = {this.state.country1}
+                        country2 = {this.state.country2}
                         route = {route}
                         position1 = {position1}
                         position2 = {position2}
