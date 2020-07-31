@@ -33,6 +33,8 @@ class App extends React.Component {
     lat2: undefined,
     lon2: undefined,
     error2: undefined,
+    forecast: undefined,
+    route: undefined
   }
 
 
@@ -70,18 +72,19 @@ exclude=current,minutely,hourly&appid=${API_KEY1}&units=metric`);
         description1: data1.weather[0].description,
         lat1: data1.coord.lat,
         lon1: data1.coord.lon,
-        error1: ""
+        error1: "",
       });
     } else {
       this.setState({
         temperature1: undefined,
-        city1: "Error",
+        city1: "Error!",
         country1: undefined,
         humidity1: undefined,
         description1: undefined,
         lat1: undefined,
         lon1: undefined,
-        error1: "Please enter valid first city and country."
+        error1: "Please enter valid first city and country.",
+        route: undefined
       });
     }
 
@@ -94,24 +97,27 @@ exclude=current,minutely,hourly&appid=${API_KEY1}&units=metric`);
         description2: data2.weather[0].description,
         lat2: data2.coord.lat,
         lon2: data2.coord.lon,
-        error2: ""
+        error2: "",
+        forecast: data3,
+        route: route
       });
     } else {
       this.setState({
         temperature2: undefined,
-        city2: "Error",
+        city2: "Error!",
         country2: undefined,
         humidity2: undefined,
         description2: undefined,
         lat2: undefined,
         lon2: undefined,
         forecast: undefined,
-        error2: "Please enter valid second city and country."
+        error2: "Please enter valid second city and country.",
+        route: undefined
       });
     }
     console.log(this.state);
-    console.log(route);
-    console.log(data3);
+    console.log(this.state.route);
+    console.log(this.state.forecast);
   }
 
 
@@ -155,37 +161,28 @@ exclude=current,minutely,hourly&appid=${API_KEY1}&units=metric`);
                       <Tabs>
                         {days.map(day => (
                           <div label={moment().add('days', day).format("DD/MM")}>
-                            {(data3 && <Weather
-                              temperature={data3.daily[day].temp.day}
-                              humidity={data3.daily[day].humidity}
+                            {this.state.forecast && <Weather
+                              temperature={this.state.forecast.daily[day].temp.day}
+                              humidity={this.state.forecast.daily[day].humidity}
                               city={this.state.city2}
                               country={this.state.country2}
-                              description={data3.daily[day].weather[0].description}
+                              description={this.state.forecast.daily[day].weather[0].description}
                               error={this.state.error2}
-                            />)
-                            || <Weather
-                              temperature={undefined}
-                              humidity={undefined}
-                              city={this.state.city2}
-                              country={this.state.country2}
-                              description={undefined}
-                              error={this.state.error2}
-                            />
-                            }
+                            />}
                           </div>
                         ))}
                       </Tabs>
                     </div>
                     <div label = "Route">
-                      <Route
+                      {this.state.route && this.state.lat1 && this.state.lat2 && <Route
                         city1 = {this.state.city1}
                         city2 = {this.state.city2}
                         country1 = {this.state.country1}
                         country2 = {this.state.country2}
-                        route = {route}
+                        route = {this.state.route}
                         position1 = {position1}
                         position2 = {position2}
-                      />
+                      />}
                     </div>
                   </Tabs>
                   }
