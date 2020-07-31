@@ -12,7 +12,6 @@ import moment from 'moment';
 const API_KEY1 = "9c8c814f6f94f1bb0ad930ceada1d790";
 const API_KEY2 = "5b3ce3597851110001cf62485fb1355fbbe9493d9ef5a0b59535dcfd"
 
-var data3, route;
 var days = [1,2,3,4,5,6,7];
 
 class App extends React.Component {
@@ -54,12 +53,12 @@ class App extends React.Component {
     if (data2.coord) {
       api_call = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${data2.coord.lat}&lon=${data2.coord.lon}&
 exclude=current,minutely,hourly&appid=${API_KEY1}&units=metric`);
-      data3 = await api_call.json();
+      var data3 = await api_call.json();
     }
 
     if (data1.coord && data2.coord) {
       api_call = await fetch(`https://api.openrouteservice.org/v2/directions/driving-car?api_key=${API_KEY2}&start=${data1.coord.lon},${data1.coord.lat}&end=${data2.coord.lon},${data2.coord.lat}`);
-      route = await api_call.json();
+      var route = await api_call.json();
       console.log(route);
     }
 
