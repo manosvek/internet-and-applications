@@ -10,7 +10,7 @@ https://openweathermap.org, ενώ η εύρεση της διαδρομής μ�
 
 
 ## Τεχνολογίες που χρησιμοποιήθηκαν
-Το Project αναπτύχθηκε εξ ολοκλήρου στη βιβλιοθήκη **React** της **JavaScript**. Επιπλέον από τη React, χρησιμοποιήθηκε η βιβλιοθήκη [Bootstrap 3](https://getbootstrap.com/docs/3.3/) για την ευκολότερη και αποτελεσματικότερη μορφοποίηση των περιεχομένων, η βιβλιοθήκη [Leaflet](https://leafletjs.com/) της JavaScript για την εμφάνιση κκαι προσαρμογή του χάρτη, καθώς επίσης και η βιβλιοθήκη [moment](https://momentjs.com/) της Javascript για την λήψη της τρέχουσας ημερομηνίας και τον υπολογισμό της ημερομηνίας των 7 επόμενων ημερών. Στην παράγραφο [Installation]() φαίνεται ο τρόπος στησίματος ενός Ubuntu μηχανήματος προκειμένου να μπορέσει να τρέξει η εφαρμογή.
+Το Project αναπτύχθηκε εξ ολοκλήρου στη βιβλιοθήκη **React** της **JavaScript**. Επιπλέον από τη React, χρησιμοποιήθηκε η βιβλιοθήκη [Bootstrap 3](https://getbootstrap.com/docs/3.3/) για την ευκολότερη και αποτελεσματικότερη μορφοποίηση των περιεχομένων, η βιβλιοθήκη [Leaflet](https://leafletjs.com/) της JavaScript για την εμφάνιση κκαι προσαρμογή του χάρτη, καθώς επίσης και η βιβλιοθήκη [moment](https://momentjs.com/) της Javascript για την λήψη της τρέχουσας ημερομηνίας και τον υπολογισμό της ημερομηνίας των 7 επόμενων ημερών. Στην παράγραφο [Installation](https://github.com/manosvek/internet-and-applications/blob/master/README.md#installation) φαίνεται ο τρόπος στησίματος ενός Ubuntu μηχανήματος προκειμένου να μπορέσει να τρέξει η εφαρμογή.
 
 
 ## Βίντεο παρουσίασης της εφαρμογής
@@ -22,5 +22,30 @@ https://openweathermap.org, ενώ η εύρεση της διαδρομής μ�
 
 
 ## Installation
+Για να τρέξει η εφαρμογή, αρχικά χρειάζεται να εγκαταστήσουμε την πλατφόρμα Node.JS.
 
-aaa
+```console
+sudo apt install nodejs
+```
+
+Στη συνέχεια, μεταφερόμαστε στον φάκελο application/ του project μας και μέσω του npm εγκαθιστούμε τις απαιτούμενες βιβλιοθήκες.
+
+```console
+cd path/to/internet-and-applications/application
+```
+
+```console
+npm install --save react
+```
+
+```console
+npm install --save react-bootstrap bootstrap@3
+```
+
+```console
+npm install --save leaflet react-leaflet
+```
+
+```console
+npm install --save moment
+```
