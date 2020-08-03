@@ -31,7 +31,7 @@ sudo apt install nodejs
 Στη συνέχεια, μεταφερόμαστε στον φάκελο application/ του project μας και μέσω του npm εγκαθιστούμε τις απαιτούμενες βιβλιοθήκες.
 
 ```console
-git pull https://github.com/manosvek/internet-and-applications.git
+git clone https://github.com/manosvek/internet-and-applications.git
 cd internet-and-applications/application
 ```
 
