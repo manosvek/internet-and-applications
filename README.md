@@ -9,6 +9,7 @@ https://openweathermap.org, ενώ η εύρεση της διαδρομής μ�
 
 ## Βίντεο παρουσίασης της εφαρμογής
 Η παρακάτω εικόνα περιέχει έναν σύνδεσμο με το βίντεο ανεβασμένο στο YouTube.
+
 [![Video Presentation](http://img.youtube.com/vi/ez8kCSYwF8U/0.jpg)](http://www.youtube.com/watch?v=ez8kCSYwF8U "Video Title")
 
 Σε περίπτωση που για κάποιο λόγο δεν οδηγεί η παραπάνω εικόνα στο YouTube, παρέχεται και ο [σύνδεσμος](https://www.youtube.com/watch?v=ez8kCSYwF8U) του βίντεο.
