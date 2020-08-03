@@ -15,7 +15,8 @@
     "react-dom": "^16.13.1",
     "react-leaflet": "^2.7.0",
     "react-moment": "^0.9.7",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "serve": "^11.3.2"
   },
   "scripts": {
     "start": "react-scripts start",
