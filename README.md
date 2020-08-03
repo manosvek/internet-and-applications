@@ -34,17 +34,25 @@ sudo apt install nodejs
 cd path/to/internet-and-applications/application
 ```
 
+Εγκατάσταση της React.
+
 ```console
 npm install --save react
 ```
+
+Εγκατάσταση της Bootstrap.
 
 ```console
 npm install --save react-bootstrap bootstrap@3
 ```
 
+Εγκατάσταση της Leaflet.
+
 ```console
 npm install --save leaflet react-leaflet
 ```
+
+Εγακτάσταση της Moment.
 
 ```console
 npm install --save moment
