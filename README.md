@@ -24,7 +24,7 @@ https://openweathermap.org, ενώ η εύρεση της διαδρομής μ�
 ## Installation
 Για να τρέξει η εφαρμογή, αρχικά χρειάζεται να εγκαταστήσουμε την πλατφόρμα Node.JS.
 
-```console
+```sh
 sudo apt install nodejs
 ```
 
