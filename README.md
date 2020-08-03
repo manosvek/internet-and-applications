@@ -18,7 +18,7 @@ https://openweathermap.org, ενώ η εύρεση της διαδρομής μ�
 
 [![Video Presentation](http://img.youtube.com/vi/ez8kCSYwF8U/0.jpg)](http://www.youtube.com/watch?v=ez8kCSYwF8U "Video Title")
 
-Σε περίπτωση που για κάποιο λόγο δεν οδηγεί η παραπάνω εικόνα στο YouTube, παρέχεται και ο [σύνδεσμος](https://www.youtube.com/watch?v=ez8kCSYwF8U){:target="_blank"} του βίντεο.
+Σε περίπτωση που για κάποιο λόγο δεν οδηγεί η παραπάνω εικόνα στο YouTube, παρέχεται και ο [σύνδεσμος](https://www.youtube.com/watch?v=ez8kCSYwF8U) του βίντεο.
 
 
 ## Installation
